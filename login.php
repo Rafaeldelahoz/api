@@ -2,7 +2,7 @@
 // Servicio para autenticar usuario
 
 header('Content-Type: application/json');
-require 'conexion.php';
+require './conexion.php';
 
 $input = json_decode(file_get_contents("php://input"), true);
 $usuario = $input['usuario'] ?? '';

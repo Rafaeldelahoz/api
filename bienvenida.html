@@ -1,0 +1,59 @@
+<?php
+session_start();
+
+// Si el usuario no ha iniciado sesión, redirigir al index
+if (!isset($_SESSION['usuario'])) {
+    header('Location: index.html');
+    exit;
+}
+
+$usuario = $_SESSION['usuario'];
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenido</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>¡Bienvenido, <?php echo htmlspecialchars($usuario); ?>!</h2>
+    <p>Has iniciado sesión correctamente.</p>
+    <form method="POST" action="./cerrar.php">
+      <button type="submit">Cerrar Sesión</button>
+    </form>
+  </div>
+
+</body>
+</html>

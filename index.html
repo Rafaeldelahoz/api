@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Prueba de API - Registro e Inicio de Sesión</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; background-color: #f4f4f4; }
+    form { background: white; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; }
+    label, input { display: block; width: 100%; margin-bottom: 10px; }
+    input[type="text"], input[type="password"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background-color: #3498db; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h2>Registro de Usuario</h2>
+  <form id="formRegistro">
+    <label for="usuarioRegistro">Usuario:</label>
+    <input type="text" id="usuarioRegistro" required>
+    
+    <label for="claveRegistro">Contraseña:</label>
+    <input type="password" id="claveRegistro" required>
+    
+    <button type="submit">Registrar</button>
+  </form>
+
+  <h2>Inicio de Sesión</h2>
+  <form id="formLogin">
+    <label for="usuarioLogin">Usuario:</label>
+    <input type="text" id="usuarioLogin" required>
+    
+    <label for="claveLogin">Contraseña:</label>
+    <input type="password" id="claveLogin" required>
+    
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+
+  <script>
+    // Registro
+    document.getElementById('formRegistro').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const usuario = document.getElementById('usuarioRegistro').value;
+      const clave = document.getElementById('claveRegistro').value;
+
+      const respuesta = await fetch('./registrar.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario, clave })
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok) {
+        alert(data.message); // ✅ Mensaje de registro exitoso
+      } else {
+        alert('Error al registrar: ' + data.message);
+      }
+    });
+
+    // Inicio de sesión
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const usuario = document.getElementById('usuarioLogin').value;
+      const clave = document.getElementById('claveLogin').value;
+
+      const respuesta = await fetch('./login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario, clave })
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok) {
+        // ✅ Redirigir a bienvenida.php
+        window.location.href = './bienvenida.html';
+      } else {
+        alert(data.message); // ✅ Alert si la contraseña es incorrecta
+      }
+    });
+  </script>
+</body>
+</html>

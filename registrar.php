@@ -2,7 +2,7 @@
 // Servicio para registrar un nuevo usuario
 
 header('Content-Type: application/json');
-require 'conexion.php';
+require './conexion.php';
 
 // Obtener datos desde POST
 $input = json_decode(file_get_contents("php://input"), true);
